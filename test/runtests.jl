@@ -18,6 +18,7 @@ function test_interface(medium::MediumProperties)
     @test cherenkov_angle(wavelength, medium) isa Number
     @test group_velocity(wavelength, medium) isa Number
     @test scattering_function(wavelength, medium) isa Number
+    @test radiation_length(medium) isa Number
 end
 
 struct MockMediumProperties <: MediumProperties end
@@ -32,6 +33,7 @@ AbstractMediumProperties.absorption_length(wavelength, medium::MockMediumPropert
 AbstractMediumProperties.group_refractive_index(wavelength, medium::MockMediumProperties) = 1.2
 AbstractMediumProperties.phase_refractive_index(wavelength, medium::MockMediumProperties) = 1.1
 AbstractMediumProperties.dispersion(wavelength, medium::MockMediumProperties) = 0.001
+AbstractMediumProperties.radiation_length(medium::MockMediumProperties) = 30
 
 
 @testset "AbstractMediumProperties.jl" begin

@@ -22,6 +22,7 @@ pressure(medium::MediumProperties) = _not_implemented(medium)
 temperature(medium::MediumProperties) = _not_implemented(medium) 
 material_density(medium::MediumProperties) = _not_implemented(medium) 
 mean_scattering_angle(medium::MediumProperties) = _not_implemented(medium)
+radiation_length(medium::MediumProperties) = _not_implemented(medium)
 
 
 """
