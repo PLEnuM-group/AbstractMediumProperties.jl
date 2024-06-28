@@ -3,6 +3,7 @@ export DIPPR105
 export refractive_index_fry
 export dispersion_fry
 export sca_len_part_conc
+export calc_quan_fry_params
 
 """
 DIPPR105Params
@@ -34,12 +35,12 @@ function DIPPR105(temperature::Real, params::DIPPR105Params=DDBDIPR105Params)
 end
 
 """
-    _calc_quan_fry_params(salinity::Real, temperature::Real, pressure::Real)
+    calc_quan_fry_params(salinity::Real, temperature::Real, pressure::Real)
 
 Helper function to get the parameters for the Quan & Fry formula as function of
 salinity, temperature and pressure.
 """
-function _calc_quan_fry_params(
+function calc_quan_fry_params(
     salinity::Real,
     temperature::Real,
     pressure::Real)
@@ -96,7 +97,7 @@ function refractive_index_fry(
     salinity::Real,
     temperature::Real,
     pressure::Real) where {T<:Real}
-    refractive_index_fry(wavelength, T.(_calc_quan_fry_params(salinity, temperature, pressure)))
+    refractive_index_fry(wavelength, T.(calc_quan_fry_params(salinity, temperature, pressure)))
 end
 
 function refractive_index_fry(
