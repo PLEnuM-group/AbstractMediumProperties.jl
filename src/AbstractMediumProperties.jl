@@ -5,6 +5,8 @@ export pressure, temperature, material_density, mean_scattering_angle
 export scattering_length, absorption_length, group_refractive_index, phase_refractive_index
 export dispersion, cherenkov_angle, group_velocity
 
+
+
 const c_vac_m_ns = 0.299792458
 
 abstract type MediumProperties end
@@ -102,5 +104,8 @@ function group_velocity(wavelength, medium::MediumProperties)
     λ_0::T = ref_ix * wavelength
     T(c_vac_m_ns) / (ref_ix - λ_0 * dispersion(wavelength, medium))
 end
+
+include("utils.jl")
+
 
 end # module
