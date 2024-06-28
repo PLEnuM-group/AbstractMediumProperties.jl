@@ -128,7 +128,7 @@ function dispersion_fry(
     salinity::Real,
     temperature::Real,
     pressure::Real) where {T<:Real}
-    dispersion_fry(wavelength, T.(_calc_quan_fry_params(salinity, temperature, pressure)))
+    dispersion_fry(wavelength, T.(calc_quan_fry_params(salinity, temperature, pressure)))
 end
 
 function dispersion_fry(wavelength::T, quan_fry_params::NTuple{4,<:Number}) where {T<:Number}
