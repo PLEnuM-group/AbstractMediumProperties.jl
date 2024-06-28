@@ -3,7 +3,7 @@ module AbstractMediumProperties
 export MediumProperties
 export pressure, temperature, material_density, mean_scattering_angle
 export scattering_length, absorption_length, group_refractive_index, phase_refractive_index
-export dispersion, cherenkov_angle, group_velocity
+export dispersion, cherenkov_angle, group_velocity, radiation_length
 
 
 
