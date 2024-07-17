@@ -53,13 +53,7 @@ absorption_length(wavelength, medium::MediumProperties) = _not_implemented(mediu
 
 
 
-"""
-    group_refractive_index(wavelength, medium)
-Return the group refractive index at `wavelength`.
 
-`wavelength` is expected to be in units nm.
-"""
-group_refractive_index(wavelength, medium::MediumProperties) = _not_implemented(medium)
 
 """
     phase_refractive_index(wavelength, medium)
@@ -105,6 +99,20 @@ function group_velocity(wavelength, medium::MediumProperties)
     ref_ix::T = phase_refractive_index(wavelength, medium)
     λ_0::T = ref_ix * wavelength
     T(c_vac_m_ns) / (ref_ix - λ_0 * dispersion(wavelength, medium))
+end
+
+"""
+    group_refractive_index(wavelength, medium)
+Return the group refractive index at `wavelength`.
+
+`wavelength` is expected to be in units nm.
+"""
+function group_refractive_index(wavelength, medium)
+    global c_vac_m_ns
+
+    T = typeof(wavelength)
+
+    return T(c_vac_m_ns)/group_velocity(wavelength, medium)
 end
 
 include("utils.jl")

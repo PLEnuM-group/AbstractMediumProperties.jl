@@ -4,8 +4,9 @@ export refractive_index_fry
 export dispersion_fry
 export sca_len_part_conc
 export calc_quan_fry_params
-
 export hg_scattering_func, sl_scattering_func, mixed_hg_sl_scattering_func, mixed_hg_sl_scattering_func_ppc
+
+export es_cumulative
 
 """
 DIPPR105Params
@@ -190,10 +191,23 @@ CUDA-optimized version of Henyey-Greenstein scattering in one plane.
     costheta::T = (1 / (2 * g) * (1 + g^2 - ((1 - g^2) / (1 + g * (2 * eta - 1)))^2))
     #costheta::T = (1 / (2 * g) * (fma(g, g, 1) - (fma(-g, g, 1) / (fma(g, (fma(2, eta, -1)), 1)))^2))
     return clamp(costheta, T(-1), T(1))
-
-
-
 end
+
+
+function es(cos_theta::T,b::T) where {T<:Real}
+    a = 1/(4*pi) * 1 / (1+b/3)
+    return a*(1+b*cos_theta^2)
+end
+
+function es_integral(cos_theta::T, b::T) where {T<:Real}
+    a = 1/(4*pi) * 1 / (1+b/3)
+    return a*cos_theta*(1 + (b*cos_theta^2)/3) * 2*pi
+end
+
+function es_cumulative(cos_theta::T, b::T) where {T<:Real}
+    return es_integral(cos_theta, b) - es_integral(-1., b)
+end
+
 
 """
     sl_scattering_func(g::Real)
@@ -209,7 +223,6 @@ function sl_scattering_func(g::T) where {T <: Real}
     costheta::T = 2 * eta^beta - 1
     return clamp(costheta, T(-1), T(1))
 end
-
 
 
 """
