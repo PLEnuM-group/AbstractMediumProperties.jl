@@ -101,6 +101,10 @@ function group_velocity(wavelength, medium::MediumProperties)
     T(c_vac_m_ns) / (ref_ix - λ_0 * dispersion(wavelength, medium))
 end
 
+
+
+
+
 """
     group_refractive_index(wavelength, medium)
 Return the group refractive index at `wavelength`.
@@ -108,11 +112,10 @@ Return the group refractive index at `wavelength`.
 `wavelength` is expected to be in units nm.
 """
 function group_refractive_index(wavelength, medium)
-    global c_vac_m_ns
-
     T = typeof(wavelength)
 
-    return T(c_vac_m_ns)/group_velocity(wavelength, medium)
+    ref_ix = phase_refractive_index(wavelength, medium)
+    return ref_ix / (T(1.0) + dispersion(wavelength, medium) * wavelength / ref_ix)
 end
 
 include("utils.jl")
