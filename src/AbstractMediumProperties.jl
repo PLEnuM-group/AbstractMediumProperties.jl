@@ -102,9 +102,6 @@ function group_velocity(wavelength, medium::MediumProperties)
 end
 
 
-
-
-
 """
     group_refractive_index(wavelength, medium)
 Return the group refractive index at `wavelength`.

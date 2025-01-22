@@ -4,9 +4,17 @@ export refractive_index_fry
 export dispersion_fry
 export sca_len_part_conc
 export calc_quan_fry_params
-export hg_scattering_func, sl_scattering_func, mixed_hg_sl_scattering_func, mixed_hg_sl_scattering_func_ppc
 
-export es_cumulative
+# Scattering functions
+export hg_scattering_func
+export sl_scattering_func
+export generic_scattering_function
+export mixed_hg_sl_scattering_func
+export mixed_hg_sl_scattering_func_ppc
+export mixed_hg_es_scattering_func
+
+using Polynomials
+
 
 """
 DIPPR105Params
@@ -117,14 +125,14 @@ end
 
 
 """
-dispersion_fry(
-    wavelength::T;
-    salinity::Real,
-    temperature::Real,
-    pressure::Real) where {T <: Real}
+    dispersion_fry(
+        wavelength::T;
+        salinity::Real,
+        temperature::Real,
+        pressure::Real) where {T <: Real}
 
-    Calculate the dispersion (dn/dλ) for the Quan & Fry model.
-    wavelength is given in nm, salinity in permille, temperature in °C and pressure in atm
+Calculate the dispersion (dn/dλ) for the Quan & Fry model.
+Wavelength is given in nm, salinity in permille, temperature in °C and pressure in atm
 """
 function dispersion_fry(
     wavelength::T;
@@ -186,27 +194,77 @@ CUDA-optimized version of Henyey-Greenstein scattering in one plane.
 
 """
 @inline function hg_scattering_func(g::T) where {T <: Real}
-    """Henyey-Greenstein scattering in one plane."""
     eta = rand(T)
     costheta::T = (1 / (2 * g) * (1 + g^2 - ((1 - g^2) / (1 + g * (2 * eta - 1)))^2))
-    #costheta::T = (1 / (2 * g) * (fma(g, g, 1) - (fma(-g, g, 1) / (fma(g, (fma(2, eta, -1)), 1)))^2))
     return clamp(costheta, T(-1), T(1))
 end
 
+"""
+    es_scattering(cos_theta::T, b::T) where {T<:Real}
 
-function es(cos_theta::T,b::T) where {T<:Real}
+Einstein-Smoluchowsky Scattering PDF.
+"""
+function es_scattering(cos_theta::T, b::T) where {T<:Real}
     a = 1/(4*pi) * 1 / (1+b/3)
     return a*(1+b*cos_theta^2)
 end
 
-function es_integral(cos_theta::T, b::T) where {T<:Real}
+"""
+    es_scattering_integral(cos_theta::T, b::T) where {T<:Real}
+
+Anti-derivative of the ES scattering function.
+"""
+function es_scattering_integral(cos_theta::T, b::T) where {T<:Real}
     a = 1/(4*pi) * 1 / (1+b/3)
     return a*cos_theta*(1 + (b*cos_theta^2)/3) * 2*pi
 end
 
-function es_cumulative(cos_theta::T, b::T) where {T<:Real}
-    return es_integral(cos_theta, b) - es_integral(-1., b)
+"""
+    es_scattering_integral(cos_theta::T, b::T) where {T<:Real}
+
+Integral of ES scattering function from -1 to cos_theta
+"""
+function es_scattering_cumulative(cos_theta::T, b::T) where {T<:Real}
+    return es_scattering_integral(cos_theta, b) - es_scattering_integral(-1., b)
 end
+
+"""
+    make_inverse_es_polynomial(b::T) where {T<:Real}
+
+Make a 3rd order polynomial that approximates the inverse of the ES scattering function.
+"""
+function make_inverse_es_polynomial(b::T) where {T<:Real}
+    cos_theta = -1:0.01:1
+    es_poly = fit(Polynomial, es_scattering_cumulative.(cos_theta, b), cos_theta, 3)
+    return Tuple(T.(collect(es_poly)))
+end
+
+
+"""
+    generic_scattering_function(p0::T, p1::T, p2::T, p3::T) where {T<:Real}
+
+Generic scattering function that can be used to sample from any 3rd order polynomial.
+
+Returns cos(scattering_angle).
+"""
+function generic_scattering_function(p0::T, p1::T, p2::T, p3::T) where {T<:Real}
+    eta = rand(T)
+    return clamp(p0 + p1 * eta + p2 * eta^2 + p3 * eta^3, T(-1), T(1))
+end
+
+"""
+    mixed_hg_es_scattering_func(g::Real, hg_fraction::Real, poly_coeffs::NTuple{4, Real})
+
+Mixture model of HG and generic scattering function.
+"""
+function mixed_hg_generic_scattering_func(g::T, hg_fraction::T, poly_coeffs::NTuple{4, T}) where {T<:Real}
+    choice = rand(T)
+    if choice < hg_fraction
+        return hg_scattering_func(g)
+    end
+    return generic_scattering_function(poly_coeffs...)
+end
+
 
 
 """
@@ -241,6 +299,10 @@ function mixed_hg_sl_scattering_func(g::Real, hg_fraction::Real)
     return sl_scattering_func(g)
 end
 
+"""
+    mixed_hg_sl_scattering_func_ppc(g, hg_fraction)
+Mixture model of HG and SL as implemented in PPC
+"""
 function mixed_hg_sl_scattering_func_ppc(g::T, hg_fraction::T) where {T <:Real}
     xi = rand()
     sf = hg_fraction
