@@ -8,7 +8,7 @@ makedocs(;
     authors="Christian Haack <chr.hck@gmail.com>",
     sitename="AbstractMediumProperties.jl",
     format=Documenter.HTML(;
-        canonical="https://chrhck.github.io/AbstractMediumProperties.jl",
+        canonical="https://plenum-group.github.io/AbstractMediumProperties.jl",
         edit_link="main",
         assets=String[],
     ),
