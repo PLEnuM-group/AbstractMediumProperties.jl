@@ -31,7 +31,3 @@ For advanced usage, refer to the API documentation and explore the available fun
 
 ```@index
 ```
-
-```@autodocs
-Modules = [AbstractMediumProperties]
-```

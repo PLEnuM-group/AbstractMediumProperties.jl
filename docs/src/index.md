@@ -47,7 +47,3 @@ The following sections provide detailed documentation for the package:
 
 ```@index
 ```
-
-```@autodocs
-Modules = [AbstractMediumProperties]
-```
