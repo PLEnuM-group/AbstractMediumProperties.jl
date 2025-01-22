@@ -3,7 +3,7 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://plenum-group.github.io/AbstractMediumProperties.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://plenum-group.github.io/AbstractMediumProperties.jl/dev/)
 [![Build Status](https://github.com/PLEnuM-group/AbstractMediumProperties.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/PLEnuM-group/AbstractMediumProperties.jl/actions/workflows/CI.yml?query=branch%3Amain)
-[![Coverage](https://codecov.io/gh/plenum-group/AbstractMediumProperties.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/chrhck/AbstractMediumProperties.jl)
+[![Coverage](https://codecov.io/gh/plenum-group/AbstractMediumProperties.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/plenum-group/AbstractMediumProperties.jl)
 
 AbstractMediumProperties provides abstract types and functions for calculating various properties of different media. It provides functionalities to compute properties such as refractive index, scattering length, absorption length, and more, based on the medium's characteristics.
 
