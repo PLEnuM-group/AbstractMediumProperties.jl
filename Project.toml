@@ -1,7 +1,7 @@
 name = "AbstractMediumProperties"
 uuid = "62ded331-ac74-4432-90fd-7fafc84e95f4"
 authors = ["Christian Haack <chr.hck@gmail.com>"]
-version = "1.4.1"
+version = "1.4.2"
 
 [deps]
 Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"

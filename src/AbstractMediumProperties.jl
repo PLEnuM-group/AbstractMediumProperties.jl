@@ -6,7 +6,7 @@ export scattering_length, absorption_length, group_refractive_index, phase_refra
 export dispersion, cherenkov_angle, group_velocity, radiation_length
 export scattering_function
 
-export vol_conc_large_part, vol_conc_large_part
+export vol_conc_small_part, vol_conc_large_part
 
 
 
