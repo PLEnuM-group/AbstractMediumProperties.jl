@@ -14,10 +14,17 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "API" => "api.md",
+        "Guide" => "guide.md",
+    ],
+    nav=[
+        "Home" => "index.md",
+        "API" => "api.md",
+        "Guide" => "guide.md",
     ],
 )
 
 deploydocs(;
-    repo="github.com/chrhck/AbstractMediumProperties.jl",
+    repo="github.com/PLEnuM-group/AbstractMediumProperties.jl",
     devbranch="main",
 )
