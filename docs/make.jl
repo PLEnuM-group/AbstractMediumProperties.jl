@@ -17,11 +17,6 @@ makedocs(;
         "API" => "api.md",
         "Guide" => "guide.md",
     ],
-    nav=[
-        "Home" => "index.md",
-        "API" => "api.md",
-        "Guide" => "guide.md",
-    ],
 )
 
 deploydocs(;
