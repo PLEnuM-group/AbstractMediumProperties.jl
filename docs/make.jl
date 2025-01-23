@@ -1,25 +1,24 @@
-using AbstractMediumProperties
+using CherenkovMediumBase
 using Documenter
 
-DocMeta.setdocmeta!(AbstractMediumProperties, :DocTestSetup, :(using AbstractMediumProperties); recursive=true)
+DocMeta.setdocmeta!(CherenkovMediumBase, :DocTestSetup, :(using CherenkovMediumBase); recursive=true)
 
 makedocs(;
-    modules=[AbstractMediumProperties],
+    modules=[CherenkovMediumBase],
     authors="Christian Haack <chr.hck@gmail.com>",
-    sitename="AbstractMediumProperties.jl",
+    sitename="CherenkovMediumBase.jl",
     format=Documenter.HTML(;
-        canonical="https://plenum-group.github.io/AbstractMediumProperties.jl",
+        canonical="https://juliahep.github.io/CherenkovMediumBase.jl",
         edit_link="main",
         assets=String[],
     ),
     pages=[
         "Home" => "index.md",
         "API" => "api.md",
-        "Guide" => "guide.md",
     ],
 )
 
 deploydocs(;
-    repo="github.com/PLEnuM-group/AbstractMediumProperties.jl",
+    repo="github.com/juliahep/CherenkovMediumBase.jl",
     devbranch="main",
 )

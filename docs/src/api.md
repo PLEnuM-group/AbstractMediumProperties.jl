@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = AbstractMediumProperties
+CurrentModule = CherenkovMediumBase
 ```
 
 # API Reference
 
-This section provides a detailed reference for all functions and types defined in the `AbstractMediumProperties` module.
+This section provides a detailed reference for all functions and types defined in the `CherenkovMediumBase` module.
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [AbstractMediumProperties]
+Modules = [CherenkovMediumBase]
 ```

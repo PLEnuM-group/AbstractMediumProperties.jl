@@ -1,10 +1,10 @@
 ```@meta
-CurrentModule = AbstractMediumProperties
+CurrentModule = CherenkovMediumBase
 ```
 
-# AbstractMediumProperties
+# CherenkovMediumBase
 
-Welcome to the documentation for [AbstractMediumProperties](https://github.com/PLEnuM-group/AbstractMediumProperties.jl).
+Welcome to the documentation for [CherenkovMediumBase](https://github.com/PLEnuM-group/CherenkovMediumBase.jl).
 
 This package provides a set of tools and abstractions for working with medium properties in physics simulations.
 
@@ -14,7 +14,7 @@ To install the package, use the following command:
 
 ```julia
 using Pkg
-Pkg.add("AbstractMediumProperties")
+Pkg.add("CherenkovMediumBase")
 ```
 
 ## Usage
@@ -22,13 +22,13 @@ Pkg.add("AbstractMediumProperties")
 Here is a simple example of how to use the package:
 
 ```julia
-using AbstractMediumProperties
+using CherenkovMediumBase
 
 # Define a custom medium
 struct CustomMedium <: MediumProperties end
 
 # Implement required methods
-function AbstractMediumProperties.pressure(medium::CustomMedium)
+function CherenkovMediumBase.pressure(medium::CustomMedium)
     return 1.0 # Example pressure
 end
 
@@ -38,7 +38,7 @@ end
 medium = CustomMedium()
 
 # Use the medium in calculations
-println(AbstractMediumProperties.pressure(medium))
+println(CherenkovMediumBase.pressure(medium))
 ```
 
 ## Documentation
